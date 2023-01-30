@@ -1,0 +1,9 @@
+
+1. create src folder
+2. create components according what we need
+3. create home functionalities
+4. navbar/header, body
+5. route
+6. list - taking input from user 
+7. showing result with dynamic data first (custom array) 
+8. api call
