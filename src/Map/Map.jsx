@@ -5,25 +5,29 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import  Rating  from "@material-ui/lab/Rating";
 
 import useStyles from "./styles";
+import mapStyles from "./mapStyles";
 
-const Map = ({setCoordinates, setBounds, coordinates, places, setChildClicked}) => {
+const Map = ({setCoordinates, setBounds, coordinates, places, setChildClicked, weatherData}) => {
   const classes = useStyles();
   const isdesktop = useMediaQuery("(min-width:600px)");
 
-  const onChildClick = () => {};
+  // const onChildClick = () => {};
+  console.log(weatherData);
 
   return (
-    <div className={classes.mapContainer}>
+    <div className={classes.mapContainer} styles={{width:'100vh', position : 'fixed'}}>
       <GoogleMapReact
-        bootstrapURLKeys={{ key:"AIzaSyAxPGGrCNJuBv1xmIUk2sYpNbvOocM1SXI" }}
+        bootstrapURLKeys={{ key: process.env.REACT_APP_GOOGLE_MAPS_API_KEY }}
         defaultCenter={coordinates}
-        defaultZoom={10}
+        defaultZoom={12}
+        margin={[50, 50, 50, 50]}
+        options={{disableDefaultUI:true, zoomControl:true, styles:mapStyles}}
         center={coordinates}      
         onChange={(e)=>{
           setCoordinates({lat:e.center.lat, lng:e.center.lng})
           setBounds({ne:e.marginBounds.ne, sw:e.marginBounds.sw})
         }}
-        onChildClick={(child)=>{setChildClicked(child)}}
+        onChildClick={(child)=>setChildClicked(child)}
       >
         {
           places?.map((place, i)=>(
@@ -47,6 +51,13 @@ const Map = ({setCoordinates, setBounds, coordinates, places, setChildClicked}) 
             }
             </div>
           ))
+        }
+        {
+          weatherData && 
+            <div lat={weatherData?.coords?.lat} lng={weatherData?.coords?.lng}>
+              <img height={100} src={ weatherData.weather? (`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`) : (`https://openweathermap.org/img/wn/10d@2x.png`)} alt="" />
+            </div>
+          
         }
       </GoogleMapReact>
     </div>

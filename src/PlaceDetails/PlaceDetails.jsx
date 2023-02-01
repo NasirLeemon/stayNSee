@@ -18,9 +18,14 @@ import Rating from "@material-ui/lab/Rating";
 
 const PlaceDetails = ({ place , selected, refProp}) => {
   const classes = useStyles();
-  console.log(place);
+  // console.log(place);
 
-  if(selected) refProp?.current?.scollIntoView({behavior:'smooth', block:'start'})
+  // console.log({selected});
+  // console.log({refProp});
+  // console.log({current});
+
+  if(selected) refProp?.current?.scrollIntoView({behavior:'smooth', block:'center'})
+
   return (
     <Card elevation={6}>
       <CardMedia
@@ -38,8 +43,8 @@ const PlaceDetails = ({ place , selected, refProp}) => {
         </Typography>
         <Box display="flex" justifyContent="space-between">
         <Rating value={Number(place.rating)} readOnly />
-          <Typography gutterBottom variant="subtitle1">
-            Out of {place.num_reviews} reviews
+          <Typography gutterBottom variant="subtitle1"> 
+          {place.rating}
           </Typography>
         </Box>
         <Box display="flex" justifyContent="space-between">
